@@ -37,7 +37,7 @@ async fn child_main(rights: UnixStream) -> anyhow::Result<()> {
         cmsg_buffer.clear();
         cmsg_buffer.push(SendAncillaryMessage::ScmRights(&fds));
         rights.async_io(Interest::WRITABLE, || Ok(sendmsg(&rights, &[IoSlice::new(&[])], &mut cmsg_buffer, SendFlags::empty())?)).await?;
-        drop(there);
+        // drop(there);
         here.write_all(b"patrick star").await?;
         here.flush().await?;
         drop(here);
